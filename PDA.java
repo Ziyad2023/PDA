@@ -10,7 +10,7 @@ import java.util.InputMismatchException;
 public class PDA
 {
     int age;
-
+    
     /**
      * Constructor for objects of class PDA
      */
@@ -20,62 +20,53 @@ public class PDA
         // our program.
     }
     
-    // younger age computation
-    public int getYoungerAge(int age) {
+    public int getYoungerAge(int age){
+        if (age % 2 != 0) {
+            age += 1;
+        }
         return (age / 2) + 7;
     }
     
-    // older age computation
     public int getOlderAge(int age) {
         return (age - 7) * 2;
-    }    
-
-    int LOWER_BOUND = 14;
+    }
     
+    int LOWER_BOUND = 14;
     /**
      * This is the main event loop for our PDA program
      */
     public void runEventLoop() {
-     Scanner scanner = new Scanner(System.in);
-     boolean shouldContinue = true;
-       
-       // ask for user input
-       while (shouldContinue) {
-       System.out.println("How old are you?");
-       
-       // parse int data
-       try {
-           age = scanner.nextInt();
-
-           // age can't be below lower bound
-           if (age < LOWER_BOUND) {
-             System.out.println(age+" is too young!!");
-           } else {
-             System.out.println("Computations go here");                
+        Scanner scanner = new Scanner(System.in);
+        boolean shouldContinue= true;
+        
+        while (true) {
+            System.out.println("How old are you?");
+            try {
+                age = scanner.nextInt();
+                System.out.println("You are "+ age + " years old");
+                if (age < LOWER_BOUND) {
+                    System.out.println(age + " is too young!!");
+                } else {
+                    System.out.println("Computations go here");
+                    System.out.println("lowest dating age is " + getYoungerAge(age));
+                    System.out.println("highest dating age is " + getOlderAge(age));
+                }
+                
+                
+            } catch (InputMismatchException error) {
+                scanner.next();
+                System.out.println("please enter an integer");
             }
-           
-            // print results
-           System.out.println("lowest dating age is " + getYoungerAge(age));
-           System.out.println("oldest dating age is " + getOlderAge(age));
-           
-       // catch invalid data
-       } catch (InputMismatchException error) {
-           scanner.next();
-           System.out.println("Please enter an integer");
-       }
-       
-       // user can enter 0 to quit program
-       System.out.println("To quit program, enter 0");
-       
-       // check if user entered 0
-       if (age == 0) {
-           shouldContinue = false;
-       } else {
-           shouldContinue = true;
-       }
-     }
+            
+            System.out.println("to quit enter 0");
+            if (age == 0) {
+                shouldContinue = false;
+            } else {
+                shouldContinue = true;
+            }
+        }
     }
-    
+
     /**
      * The main method instantiates and runs the program
      */
@@ -84,4 +75,3 @@ public class PDA
         pda.runEventLoop();
     }
 }
-
